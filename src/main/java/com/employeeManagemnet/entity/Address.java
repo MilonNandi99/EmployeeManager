@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-
+@NotNull(message="Address is mandatory")
 @Entity @Getter @Setter
 public class Address {
 
