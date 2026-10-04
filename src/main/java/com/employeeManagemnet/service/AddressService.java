@@ -22,9 +22,11 @@ public class AddressService {
 	public void saveAddress(Address address) {
 		addressRepo.save(address);
 	}
+
 	public List<Address> getAllAddress(){
 		return addressRepo.findAll();
 	}
+
 	public void updateAddress(int targetId,Address addressDetails) {
 		Optional<Address> optionalAddress=addressRepo.findById(targetId);
 		if(optionalAddress.isPresent()) {

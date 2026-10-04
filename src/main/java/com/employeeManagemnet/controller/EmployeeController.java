@@ -3,6 +3,8 @@ package com.employeeManagemnet.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.employeeManagemnet.entity.ContactDetails;
+import com.employeeManagemnet.service.ContactDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,8 @@ public class EmployeeController {
 	
 	@Autowired
 	private DepartmentService departmentService;
+	@Autowired
+	private ContactDetailsService contactService;
 	
 	
 	@PostMapping("/employee/save")
@@ -174,11 +178,7 @@ public class EmployeeController {
 	@GetMapping("/getDepartment/{targetId}")
 	public ResponseEntity<Department> getDepartmentById(int id){
 		Optional<Department> optDept=departmentService.getDepartmentById(id);
-		if(optDept.isPresent()) {
-			return ResponseEntity.ok(optDept.get());
-		}else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		}
+        return optDept.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
 	}
 	
 	@PutMapping("/department/update/{targetId}")
@@ -189,6 +189,16 @@ public class EmployeeController {
 		}catch(ResourceNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		}	
+	}
+
+	@PutMapping("/contact/update/{cid}")
+	public ResponseEntity<String> updateContact(@PathVariable int cid, @Valid @RequestBody ContactDetails contactDetails) {
+		try{
+			contactService.updateContact(cid, contactDetails);
+			return ResponseEntity.status(HttpStatus.OK).body("Contact Updated!");
+		}catch (ResourceNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
 	}
 	
 	@DeleteMapping("/department/delete/{id}")

@@ -1,12 +1,6 @@
 package com.employeeManagemnet.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.Digits;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,12 +19,15 @@ public class Employee {
 	private String firstName;
 	private String lastName;
 	private int salary;
-	@NotNull(message="Contact is mandatory.")
-	@Digits(integer=10,fraction=0)
-	private long contact;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "cid")
+	private ContactDetails contact;
+
 	@ManyToOne
     @JoinColumn(name = "address_id")
 	private Address address;
+
 	@ManyToOne
     @JoinColumn(name = "department_id")
 	@NotNull(message="Department is mandatory.")
