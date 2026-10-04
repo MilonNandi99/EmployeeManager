@@ -1,0 +1,9 @@
+Employee Manager Application
+
+This is a Employee Manager Microservice, which Manages employees PII data. Exposes APIs: Save Employee, Save Address, save Department
+save contact details, update, delete, etc.
+
+Dev release history:
+1. created Git repository, created application structure
+2. created Model classes, JPA repos, wrote service logics, developed APIs.
+3. Ensured Address, department, contact details rows are getting saved uniquely in DB.
